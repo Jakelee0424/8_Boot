@@ -1,0 +1,46 @@
+<link rel="stylesheet" th:href="@{/css/main-style.css}" type="text/css">
+<script th:src="@{https://kit.fontawesome.com/b2efae0e57.js}" crossorigin="anonymous"></script>
+
+<header>
+
+	<section>
+		<a th:href="@{/}"> <img th:src="@{/images/logo.jpg}" id="homeLogo">
+		</a>
+	</section>
+
+	<section>
+
+		<section class="search-area">
+
+			<form th:action="@{/search}" name="search-form" method="get">
+
+				<fieldset>
+					<input type="search" id="query" name="query" autocomplete="off" placeholder="검색어를 입력하세요">
+
+					<button id="searchBtn" class="fa-solid fa-magnifying-glass"></button>
+				</fieldset>
+
+			</form>
+
+		</section>
+
+
+	</section>
+
+	<section></section>
+
+</header>
+
+
+<nav>
+	<ul>
+
+		<li><a th:href="@{#}">1</a></li>
+		<li><a th:href="@{/board/boardList}">2</a></li>
+		<li><a th:href="@{#}">3</a></li>
+		<li><a th:href="@{#}">4</a></li>
+		<li><a th:href="@{#}">5</a></li>
+
+	</ul>
+</nav>
+

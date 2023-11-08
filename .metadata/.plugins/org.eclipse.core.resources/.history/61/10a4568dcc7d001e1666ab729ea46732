@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+	<html lang="en" xmlns="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		
+		<link rel="stylesheet" href="/resources/css/main-style.css" type="text/css">
+		<script src="https://kit.fontawesome.com/b2efae0e57.js" crossorigin="anonymous"></script>
+	</head>
+
+	<body>
+		<main>
+	
+			<jsp:include page ="/WEB-INF/views/common/header.html"/>
+
+
+
+			<section class="content">
+				
+				<section class="content-1">
+
+					<h3>로그인된 회원 정보</h3>
+						이메일: th: "${sessionScope.loginMember.memberEmail}"" <br>
+						닉네임: ${sessionScope.loginMember.memberNickname} <br>
+						전화번호: ${sessionScope.loginMember.memberTel} <br>
+						<br>
+					<h3>닉네임이 일치하는 회원의 전화번호 조회</h3>
+
+					<input type="text" id="inputNickname">
+					<button id="btn1">조회</button>
+					<h4 id="result1"></h4>
+
+					<hr>
+
+					<h3>이메일을 입력받아 일치하는 회원의 정보를 조회</h3>
+					<input id="inputEmail">
+					<button id="btn2">조회</button>
+					<ul id="result2">
+						
+
+					</ul>
+
+				</section>
+
+				<section class="content-2">
+
+				
+
+							<form action="/member/login" name="login-form" id="loginFrm" method="post">
+
+								<fieldset class="id-pw-area">
+		
+									<section>
+										<input type="text" name="memberEmail" placeholder="이메일"
+											autocomplete="off"
+											value="${cookie.saveId.value}"
+											>										
+										<input type="password" name="memberPw" placeholder="비밀번호">
+									</section>
+		
+									<section>
+										<button>로그인</button>
+									</section>
+		
+								</fieldset>
+		
+								<label for="saveId">
+							
+								
+										
+										<c:set var="save" value="checked"/>
+										
+							
+								
+									<input type="checkbox" name="saveId" ${save}>아이디 저장
+								</label>
+		
+								<section class="signup-find-area">
+									<a href="/member/signUp">회원가입</a>
+									<span>|</span>
+									<a href="#">ID/PW 찾기</a>
+								</section>
+		
+							</form>
+	
+						
+							
+							<article class="login-area">
+							
+								<a href="/myPage/profile">
+							
+									<img src="/resources/images/user.png" id="memberProfile">
+							
+								</a>
+
+								<div class="my-info">
+									<div>
+										<a href="/myPage/info" id="nickname">${sessionScope.loginMember.memberNickname}</a>
+										<a href="/member/logout" id="logoutBtn">로그아웃</a>
+									</div>
+
+									<p></p>
+								</div>
+								
+							</article>
+
+
+				</section>
+
+			</section>
+			
+		</main>
+
+		<jsp:include page ="/WEB-INF/views/common/footer.jsp"/>
+	
+    	<!-- <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script> -->
+		
+		<script src="/resources/js/main.js"></script>
+
+
+	</body>
+
+	</html>

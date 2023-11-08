@@ -1,0 +1,27 @@
+<footer>
+
+	<p>Copyright &copy; KH Information Educational Institute E-Class</p>
+
+	<section>
+		<a th:href="@{#}">프로젝트 소개</a>
+		<span> |</span>
+		<a th:href="@{#}">이용약관</a>
+		<span> |</span>
+		<a th:href="@{#}">개인정보처리방침</a>
+		<span> |</span>
+		<a th:href="@{#}">고객센터</a>
+	</section>
+	
+</footer>
+
+
+
+ <script th:inline="javascript">
+        const msg = /*[[${msg}]]*/ "전달받은 msg"; 
+
+        alert(msg);
+    </script>
+
+
+
+

@@ -1,0 +1,11 @@
+package edu.kh.project.member.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping("/member")
+public class MemberController {
+
+	
+	
+	
+}

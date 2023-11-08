@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<!-- 현재 HTMl 문서에 타임리프 문법 사용 선언 -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>메인 페이지</title>
+</head>
+
+<body>
+	<main>
+
+		<!-- th : block
+			
+			- html 태그가 아닌 단순 타임리프를 쓰기 위한 태그
+			- 타임리프 해석 시 다른 타임리트 수행 후 사라짐
+			
+		 -->
+		<th:block th:replace="~{common/header}"></th:block>
+
+		<section class="content">
+
+			<section class="content-1">
+
+				<h3>로그인된 회원 정보</h3>
+				이메일: <br>
+				닉네임: <br>
+				전화번호: <br>
+				<br>
+				<h3>닉네임이 일치하는 회원의 전화번호 조회</h3>
+
+				<input type="text" id="inputNickname">
+				<button id="btn1">조회</button>
+				<h4 id="result1"></h4>
+
+				<hr>
+
+				<h3>이메일을 입력받아 일치하는 회원의 정보를 조회</h3>
+				<input id="inputEmail">
+				<button id="btn2">조회</button>
+				<ul id="result2">
+	
+				<h3>삼항 연산자</h3>
+
+				<p> th:text=${name} ? ${name} : '이름없음"</p>
+
+				</ul>
+
+			</section>
+
+			<section class="content-2">
+
+				<th:block th:if="${session.loginMember == null}">
+
+					<form th:action="@{/member/login}" name="login-form" id="loginFrm" method="post">
+
+						<fieldset class="id-pw-area">
+
+							<section>
+								<input type="text" name="memberEmail" placeholder="이메일" autocomplete="off" value="">
+								<input type="password" name="memberPw" placeholder="비밀번호">
+							</section>
+
+							<section>
+								<button>로그인</button>
+							</section>
+
+						</fieldset>
+
+						<label for="saveId">
+
+							<input type="checkbox" name="saveId">아이디 저장
+
+						</label>
+
+						<section class="signup-find-area">
+
+							<a th:href="@{/member/signUp}">회원가입</a>
+							<span>|</span>
+							<a href="#">ID/PW 찾기</a>
+
+						</section>
+
+					</form>
+
+				</th:block>
+
+
+				<!-- requst scope는 그냥 인식
+					 session scope는 session. 붙여야함	
+						 -->
+				<th:block th:if="${session.loginMember != null}">
+
+				<article class="login-area">
+
+					<a th:href="@{/myPage/profile}">
+
+						<img th:src="@{/images/user.png}" id="memberProfile">
+
+					</a>
+
+					<div class="my-info">
+						<div>
+							<a th:href="@{/myPage/info}" id="nickname">[[${session.loginMember.memberNickname}]]</a>
+							<a th:href="@{/member/logout}" id="logoutBtn">로그아웃</a>
+						</div>
+
+						<p></p>
+					</div>
+
+
+				</article>
+
+				</th:block>
+
+			</section>
+
+		</section>
+
+	</main>
+
+	<th:block th:replace="~{common/footer}"></th:block>
+
+	<!-- <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script> -->
+
+	<script th:src="@{/js/main.js}"></script>
+
+
+</body>
+
+</html>
