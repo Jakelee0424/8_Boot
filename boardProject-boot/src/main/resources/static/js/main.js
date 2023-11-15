@@ -124,30 +124,60 @@ btn2.addEventListener("click", () => {
 // 웹소켓 테스트
 // 1. sockJS 라이브러리 추가 (CDN으로 jsp에 추가)
 
-// 2. sockJS를 이용하여 클라이언트용 웹소켓 객체 생성
-let testSock = new SockJS("/testSock");
+// // 2. sockJS를 이용하여 클라이언트용 웹소켓 객체 생성
+// let testSock = new SockJS("/testSock");
 
-function sendMessage(name, str) {
+// function sendMessage(name, str) {
 
-    // 매개변수를 JS 객체에 저장
-    let obj = {}; // 비어있는 객체
+//     // 매개변수를 JS 객체에 저장
+//     let obj = {}; // 비어있는 객체
 
-    obj.name = name; // 객체에 일치하는 키가 없으면 자동 추가
-    obj.str = str;
+//     obj.name = name; // 객체에 일치하는 키가 없으면 자동 추가
+//     obj.str = str;
 
-    console.log(obj);
+//     console.log(obj);
 
-    testSock.send(JSON.stringify(obj)); // JS객체 -> JSON 변환 -> send;
+//     testSock.send(JSON.stringify(obj)); // JS객체 -> JSON 변환 -> send;
+
+// }
+
+// // 3. 웹소켓 객체(testSock)가 서버로부터 전달받은 메세지가 있는 경우
+// testSock.onmessage = e => {
+
+//     // e.data : 전달받은 객체
+
+//     obj = JSON.parse(e.data) // JSON객체 -> JS객체
+
+//     console.log(`보낸사람 : ${obj.name}  /  내용 : ${obj.str}`);
+// }
+
+function getcookie(key){  
+
+    const cookies = document.cookie;
+
+    const cookieList = cookies.split("; ").map(cookie => cookie.split("="));
+    
+    // 배열.map() : 배열의 모든 요소를 순차접근하여 특정 함수 수행 후, 수행 결과를 이용해 새로운 배열 생성
+
+    const obj = {};
+
+    for(let i = 0 ; i < cookieList.length ; i ++){
+
+        obj[cookieList[i][0]] = cookieList[i][1];
+
+    }
+
+    return obj[key];
 
 }
 
-// 3. 웹소켓 객체(testSock)가 서버로부터 전달받은 메세지가 있는 경우
-testSock.onmessage = e => {
+if(document.querySelector("input[name='memberEmail']")){
 
-    // e.data : 전달받은 객체
+    const saveId = getcookie("saveId");
 
-    obj = JSON.parse(e.data) // JSON객체 -> JS객체
-
-    console.log(`보낸사람 : ${obj.name}  /  내용 : ${obj.str}`);
+    if(saveId != undefined){
+        document.querySelector("input[name='memberEmail']").value = saveId;
+        document.querySelector("input[name='saveId']").checked = true;
+    }
 }
 

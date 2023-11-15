@@ -104,9 +104,11 @@
 
 					<article class="login-area">
 
-						<a th:href="@{/myPage/profile}">
+						<a th:href="@{/myPage/profile}" th:object="${session.loginMember}">
 
-							<img th:src="@{/images/user.png}" id="memberProfile">
+							<img th:unless="*{profileImage}" th:src="@{/images/user.png}" id="memberProfile">
+
+							<img th:if="*{profileImage}" th:src="*{profileImage}" id="memberProfile">
 
 						</a>
 

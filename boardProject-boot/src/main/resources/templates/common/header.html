@@ -35,11 +35,9 @@
 <nav>
 	<ul>
 
-		<li><a th:href="@{#}">1</a></li>
-		<li><a th:href="@{/board/boardList}">2</a></li>
-		<li><a th:href="@{#}">3</a></li>
-		<li><a th:href="@{#}">4</a></li>
-		<li><a th:href="@{#}">5</a></li>
+		<li th:each="boardType : ${application.boardTypeList}">
+			<a th:href="@{#}" th:text="${boardType.BOARD_NAME}">게시판 이름</a>
+		</li>
 
 	</ul>
 </nav>
