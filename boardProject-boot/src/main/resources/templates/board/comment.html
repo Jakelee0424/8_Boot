@@ -1,51 +1,41 @@
-
 <div id="commentArea">
     <!-- 댓글 목록 -->
     <div class="comment-list-area">
         
-       
         <ul id="commentList">
-
-		<c:forEach items="${board.commentList}" var="comment">
+			
 	            <!-- 부모/자식 댓글 -->
-				<input type="hidden" value="${comment.commentNo}"></input>
-	            <li class="comment-row <c:if test='${comment.parentNo != 0}'>child-comment</c:if> ">
+	            <li class="comment-row" 
+	            th:each="comment : ${board.commentList}"
+	            th:classappend="${comment.parentNo} != 0 ? child-comment"
+	            th:object="${comment}">
 	
 	                <p class="comment-writer">
-					
-
-		 				 <c:choose>
 	                    	
-	                    	<c:when test="${empty comment.profileImage}" >
-		                    	<img src="/resources/images/user.png">
-	                    	</c:when>
-							
-							<c:otherwise>
-	                   		 	<img src="${comment.profileImage}">
-							</c:otherwise>
+                    	<img th:unless="*{profileImage}" th:src="@{/images/user.png}">
+					
+               		 	<img th:if="*{profileImage}" th:src="*{profileImage}">
 	                    
-	                    </c:choose>
 	
-	                    <span>${comment.memberNickname}</span>
+	                    <span th:text="*{memberNickname}"></span>
 	                    
-	                    <span class="comment-date">${comment.commentCreateDate}</span>
+	                    <span class="comment-date" th:text="*{commentCreateDate}"></span>
 	                </p>
 	                
-	                <p class="comment-content">${comment.commentContent}</p>
+	                <p class="comment-content" th:text="*{commentContent}"></p>
 	
 	
 	                <div class="comment-btn-area">
-	                    <button onclick="showInsertComment(`${comment.commentNo}`, this)">답글</button>   
+	                    <button th:onclick="|showInsertComment(`${comment.commentNo}`, this)|">답글</button>   
 	                   	
-	                   	<c:if test="${loginMember.memberNo == comment.memberNo}">
-	                    	<button onclick="showUpdateComment('${comment.commentNo}', this)">수정</button>     
-	                    	<button onclick="deleteComment('${comment.commentNo}')">삭제</button>
-	                	</c:if>
+	                   	<th:block th:if="${session.loginMember?.memberNo == comment.memberNo}">
+	                    	<button th:onclick="|showUpdateComment('${comment.commentNo}', this)|">수정</button>     
+	                    	<button th:onclick="|deleteComment('${comment.commentNo}')|">삭제</button>
+	                	</th:block>
 	                	
 	                </div>
 	            </li>
 	            
-		</c:forEach>
 	
 	           
 

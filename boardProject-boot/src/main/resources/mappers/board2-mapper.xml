@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.kh.project.common.board.model.dao.BoardMapper2">
+
+	
+	<insert id="boardInsert" parameterType="Board" useGeneratedKeys="true">
+	
+		<selectKey order="BEFORE" resultType="_int" keyProperty="boardNo">
+			SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		INSERT INTO BOARD 
+		VALUES( #{boardNo}, #{boardTitle}, #{boardContent}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, #{memberNo}, #{boardCode})
+	</insert>
+
+	<!-- 
+		
+		동적 SQL 
+		
+		<foreach> 태그 : 특정 SQL 구문을 반복, 반복 사이에 구분자 추가 가능
+	
+	 -->
+
+	<insert id="insertImages" parameterType="list">
+		INSERT INTO "BOARD_IMG"
+		SELECT SEQ_IMG_NO.NEXTVAL, A.*
+		FROM(
+		
+			<foreach collection="list" item="img" separator=" UNION ALL ">
+				SELECT #{img.imagePath} IMG_PATH,
+					   #{img.imageReName} IMG_RENAME,
+					   #{img.imageOriginal} IMG_ORIGINAL,
+					   #{img.imageOrder} IMG_ORDER,
+					   #{img.boardNo} BOARD_NO
+				FROM DUAL
+			</foreach>	
+		) A
+	</insert>
+
+	<update id="boardUpdate">
+		UPDATE "BOARD" SET
+		BOARD_TITLE = #{boardTitle},
+		BOARD_CONTENT = #{boardContent},
+		B_UPDATE_DATE = SYSDATE
+		WHERE BOARD_CODE = #{boardCode}
+		AND BOARD_NO = #{boardNo}	
+	</update>
+
+	<delete id="imageDelete">
+		DELETE FROM BOARD_IMG
+		WHERE BOARD_NO = #{boardNo}
+		AND IMG_ORDER IN (${deleteList})
+	</delete>
+
+	<update id="imageUpdate">
+		UPDATE "BOARD_IMG" SET
+		IMG_PATH = #{imagePath},
+		IMG_ORIGINAL = #{imageOriginal},
+		IMG_RENAME = #{imageReName}
+		WHERE BOARD_NO = #{boardNo}
+		AND IMG_ORDER = #{imageOrder}
+	</update>
+
+	<insert id="imageInsert">
+		INSERT INTO "BOARD_IMG"
+		VALUES( SEQ_IMG_NO.NEXTVAL, #{imagePath}, #{imageReName},
+			#{imageOriginal}, #{imageOrder}, #{boardNo}	)
+	</insert>
+	
+	<update id="boardDelete">
+		UPDATE "BOARD" SET
+		BOARD_DEL_FL = 'Y'
+		WHERE BOARD_NO = #{boardNo}
+		AND BOARD_CODE = #{boardCode}
+	</update>
+	
+	<update id="deleteComment">
+		UPDATE "COMMENT" SET
+		COMMENT_DEL_FL = 'Y'
+		WHERE COMMENT_NO = #{commentNo}
+	</update>
+	
+	<insert id="insertComment">
+		INSERT INTO "COMMENT"
+		VALUES(SEQ_COMMENT_NO.NEXTVAL, #{comment}, DEFAULT, DEFAULT, #{boardNo}, #{memberNo}, 
+		
+		<if test="parentNo == 0"> Null </if>
+		<if test="parentNo != 0"> #{parentNo} </if>
+		
+			   )
+	</insert>
+	
+	<insert id="insert">
+		INSERT INTO "COMMENT"
+		VALUES(SEQ_COMMENT_NO.NEXTVAL, #{commentContent}, DEFAULT, DEFAULT, #{boardNo}, #{memberNo}, 
+		
+		<if test="parentNo == 0"> Null </if>
+		<if test="parentNo != 0"> #{parentNo} </if>
+		
+			   )
+	</insert>
+	
+	<update id="updateComment">
+		UPDATE "COMMENT" SET
+		COMMENT_CONTENT = #{commentContent}
+		WHERE COMMENT_NO = #{commentNo}
+	</update>
+	
+</mapper>

@@ -243,7 +243,7 @@
 		VALUES(#{boardNo}, #{memberNo})
 	</insert>
 	
-	<delete id="deletetBoardLike">
+	<delete id="deleteBoardLike">
 		DELETE FROM BOARD_LIKE
 		WHERE BOARD_NO = #{boardNo}
 		AND MEMBER_NO = #{memberNo}

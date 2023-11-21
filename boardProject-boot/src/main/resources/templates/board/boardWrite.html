@@ -1,26 +1,19 @@
-
-<c:forEach items="${boardTypeList}" var="boardType">
-    <c:if test="${boardType.BOARD_CODE == boardCode}" >
-        <c:set var="boardName" value="${boardType.BOARD_NAME}"/>
-    </c:if>
-</c:forEach>
-
 <!DOCTYPE html>
-<html lang="ko">
-<head>
+<html lang="ko"  xmlns:th="http://www.thymeleaf.org">
+<head> 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${boardName}</title>
+    <title th:text="${boardName}"></title>
 
-    <link rel="stylesheet" href="/resources/css/board/boardWrite-style.css">
+    <link rel="stylesheet" th:href="@{/css/board/boardWrite-style.css}">
 </head>
 <body>
     <main>
-        <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+        <th:block th:replace="~{common/header}"></th:block>
 
-        <form action="/board2/${boardCode}/insert" method="POST" class="board-write" id="boardWriteFrm" enctype="multipart/form-data">  
-            <h1 class="board-name">${boardName}</h1>
+        <form th:action="@{insert}" method="POST" class="board-write" id="boardWriteFrm" enctype="multipart/form-data">  
+            <h1 class="board-name" th:text="${boardName}"></h1>
 
             <!-- 제목 -->
             <h1 class="board-title">
@@ -93,10 +86,8 @@
         </form>
 
     </main>
-
-    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
-
-    <script src="/resources/js/board/boardWrite.js"></script>
+	<th:block th:replace="~{common/footer}"></th:block>
+    <script th:src="@{/js/board/boardWrite.js}"></script>
 
 </body>
 </html>

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.kh.project.common.board.model.dto.Board;
+import edu.kh.project.common.board.model.dto.BoardImage;
 import edu.kh.project.common.board.model.service.BoardService;
 import edu.kh.project.member.model.dto.Member;
 import jakarta.servlet.http.Cookie;
@@ -154,7 +155,7 @@ public class BoardController {
 				
 				result = service.selectLike(map);
 				
-				// if(result > 0) model.addAttribute("likeCheck", "on");
+				 if(result > 0) model.addAttribute("likeCheck", "on");
 
 			} 		
 			model.addAttribute("result", result);
@@ -255,6 +256,21 @@ public class BoardController {
 			path = "board/boardDetail";
 			model.addAttribute("board", board);
 			
+			if(!board.getImageList().isEmpty()) {
+				
+				BoardImage thumbnail = null;
+				
+				if(board.getImageList().get(0).getImageOrder() == 0) {
+					
+					thumbnail = board.getImageList().get(0);
+					
+				}
+					
+				model.addAttribute("thumbnail", thumbnail);
+			
+				model.addAttribute("start", thumbnail != null ? 1 : 0);
+				
+			}
 				
 		} else {
 			
