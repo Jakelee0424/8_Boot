@@ -121,13 +121,8 @@ public class BoardServiceImpl2 implements BoardService2{
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public int boardUpdate(Board board, List<MultipartFile> images, String webPath, String filePath,
+	public int boardUpdate(Board board, List<MultipartFile> images, 
 			String deleteList) throws IllegalStateException, IOException {
-
-		// 1. 게시글 제목, 내용 수정
-		// 1-1. XSS 방지 처리
-		board.setBoardTitle( Util.XSSHandling(board.getBoardTitle()));
-		board.setBoardContent( Util.XSSHandling(board.getBoardContent()));
 
 		// 2. 글 업데이트
 		int rowCount = mapper.boardUpdate(board);

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
 import edu.kh.project.common.board.model.dto.Board;
+import edu.kh.project.common.board.model.dto.Comment;
 import edu.kh.project.common.board.model.dto.Pagination;
 
 @Mapper
@@ -35,5 +36,16 @@ public interface BoardMapper {
 	List<Board> selectSearchBoardList(Map<String, Object> paramMap, RowBounds rowBounds);
 
 	List<String> selectImageList();
+	
+	public List<Comment> selectCommentList(int boardNo);
+
+	public int deleteComment(int commentNo);
+
+	public int insertComment(Map<String, Object> map);
+
+	public int updateComment(Map<String, Object> map);
+
+	public int insert(Comment comment);
+
 
 }

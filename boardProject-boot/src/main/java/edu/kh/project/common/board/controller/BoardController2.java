@@ -144,12 +144,8 @@ public class BoardController2 {
 		board.setBoardCode(boardCode);
 		board.setBoardNo(boardNo);
 		
-		// 경로 지정
-		String webPath = "/resources/images/board/";
-		String filePath = session.getServletContext().getRealPath(webPath);
-		
 		// 서비스 호출
-		int rowCount = service.boardUpdate(board, images, webPath, filePath, deleteList);
+		int rowCount = service.boardUpdate(board, images, deleteList);
 		
 		String msg = null;
 		String path = "redirect:";
