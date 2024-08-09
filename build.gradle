@@ -10,6 +10,8 @@ sonarqube {
     property 'sonar.projectKey', 'Jakelee0424_8_Boot_9c38ee3e-312f-4227-ad0b-355b3677bac4'
     property 'sonar.projectName', '8_Boot'
     property 'sonar.host.url', 'http://localhost:9000'
+	property 'sonar.token', 'sqa_089eb927bd56bc113fb46ac555e5fd5bed630d56'
+	property 'sonar.login', 'sqa_089eb927bd56bc113fb46ac555e5fd5bed630d56'
   }
 }
 
