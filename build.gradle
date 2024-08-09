@@ -25,6 +25,10 @@ configurations {
 	}
 }
 
+bootJar {
+	mainClass = 'edu.kh.project.main.controller.MainController'
+}
+
 repositories {
 	mavenCentral()
 }
